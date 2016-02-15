@@ -7,7 +7,29 @@ class ChangeMaker
   # +denominations+:: An array containing the denominations that can be used.
   #                   Defaults to standard US coin denominations
   def self.make_change(amount, denominations=[1,5,10,25])
-    raise "Not Implemented"
+    self.naive_make_change(amount, denominations)
+  end
+
+  def self.naive_make_change(amount, denominations)
+    denominations.sort!
+
+    remaining_amount = amount
+    change = []
+
+    denominations.reverse_each do |denomination|
+      coins_at_this_denomination = remaining_amount / denomination
+
+      if coins_at_this_denomination > 0
+        remaining_amount -= denomination * coins_at_this_denomination
+        change += Array.new(coins_at_this_denomination, denomination)
+      end
+    end
+
+    if remaining_amount == 0
+      change
+    else
+      raise ChangeError.new
+    end
   end
 end
 

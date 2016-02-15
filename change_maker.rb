@@ -24,7 +24,7 @@ class ChangeMaker
           sub_solution = self.slow_make_change(amount - den, denominations) 
           sub_solution.nil? ? nil : sub_solution + [den]
         end
-        solutions.compact.min_by { |s| s.length }
+        solutions.compact.min_by(&:length)
       end
   end
 

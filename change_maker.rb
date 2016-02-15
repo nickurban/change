@@ -7,10 +7,24 @@ class ChangeMaker
   # +denominations+:: An array containing the denominations that can be used.
   #                   Defaults to standard US coin denominations
   def self.make_change(amount, denominations=[1,5,10,25])
-    self.naive_make_change(amount, denominations)
+    self.slow_make_change(amount, denominations)
   end
 
-  def self.naive_make_change(amount, denominations)
+  def self.slow_make_change(amount, denominations, stored_solutions = {})
+    useful_denominations = denominations.reject { |den| den > amount }
+    raise ChangeError.new if useful_denominations.empty?
+
+    stored_solutions[amount] ||=
+      if denominations.include?(amount)
+        [amount]
+      else
+        solutions = denominations.map { |den| amount < den ? nil : self.slow_make_change(amount - den, denominations) + [den] }
+        solutions.compact.min_by { |s| s.length }
+      end
+  end
+
+  # Works for US coins but not for arbitrary denominations
+  def self.greedy_make_change(amount, denominations)
     denominations.sort!
 
     remaining_amount = amount

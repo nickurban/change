@@ -20,6 +20,11 @@ describe ChangeMaker do
       expect(result).to match_array([25, 10, 1, 1])
     end
 
+    it "creates change for 22 cents" do
+      result = ChangeMaker.make_change(22, [2,4,7,8])
+      expect(result).to match_array([7,7,8])
+    end
+
     it "creates change for 5 cents given different denominations" do
       result = ChangeMaker.make_change(5, [1, 3])
       

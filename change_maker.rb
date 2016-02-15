@@ -8,7 +8,7 @@ class ChangeMaker
   #                   Defaults to standard US coin denominations
   def self.make_change(amount, denominations=[1,5,10,25])
     self.make_change_recursively(amount, denominations).tap do |solution|
-      raise ChangeError.new if solution.nil?
+      raise ChangeError.new("Could not make change for #{amount} from #{denominations}") if solution.nil?
     end
   end
 
@@ -48,7 +48,7 @@ class ChangeMaker
     if remaining_amount == 0
       change
     else
-      raise ChangeError.new
+      raise ChangeError.new "Could not make change for #{amount} from #{denominations}"
     end
   end
 end

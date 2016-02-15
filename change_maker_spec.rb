@@ -40,7 +40,7 @@ describe ChangeMaker do
     it "raises an error if there is no way to make change" do
       expect {
         ChangeMaker.make_change(17, [5, 8, 10])
-      }.to raise_error(ChangeError)
+      }.to raise_error(ChangeError, "Could not make change for 17 from [5, 8, 10]")
     end
 
     it "raises an error when passed a 0" do

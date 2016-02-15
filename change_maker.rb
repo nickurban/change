@@ -30,6 +30,7 @@ class ChangeMaker
   end
 
   # Works for US coins but not for arbitrary denominations
+  # Note: not currently tested in specs.
   def self.make_change_greedily(amount, denominations)
     denominations.sort!
 

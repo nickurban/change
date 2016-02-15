@@ -30,7 +30,7 @@ class ChangeMaker
   end
 
   # Works for US coins but not for arbitrary denominations
-  def self.greedy_make_change(amount, denominations)
+  def self.make_change_greedily(amount, denominations)
     denominations.sort!
 
     remaining_amount = amount

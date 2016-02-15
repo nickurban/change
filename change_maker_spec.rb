@@ -20,7 +20,7 @@ describe ChangeMaker do
       expect(result).to match_array([25, 10, 1, 1])
     end
 
-    it "creates change for 22 cents" do
+    it "creates change for 22 cents with weird denominations" do
       result = ChangeMaker.make_change(22, [2,4,7,8])
       expect(result).to match_array([7,7,8])
     end
@@ -40,6 +40,18 @@ describe ChangeMaker do
     it "raises an error if there is no way to make change" do
       expect {
         ChangeMaker.make_change(17, [5, 8, 10])
+      }.to raise_error(ChangeError)
+    end
+
+    it "raises an error when passed a 0" do
+      expect {
+        ChangeMaker.make_change(0)
+      }.to raise_error(ChangeError)
+    end
+
+    it "raises an error when passed a negative number" do
+      expect {
+        ChangeMaker.make_change(-5)
       }.to raise_error(ChangeError)
     end
   end
